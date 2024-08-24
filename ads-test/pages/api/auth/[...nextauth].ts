@@ -1,25 +1,15 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-type User = {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-};
-
-// In-memory user data (dummy)
-let users: User[] = [
-  { id: "1", username: "user1", email: "zeze@gmail.com", password: "password1" },
-  { id: "2", username: "user2", email: "user2@example.com", password: "password2" },
+const users = [
+  {
+    id: "1",
+    name: "zee jkt",
+    email: "zeejkt@gmail.com",
+    password: "password123", 
+  },
 ];
 
-// Function to add a new user (used for registration)
-export function addUser(newUser: User) { // Specify the type for newUser
-  users.push(newUser);
-}
-
-// NextAuth configuration
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -28,15 +18,15 @@ export default NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
+      async authorize(credentials) {
         const user = users.find(
           (user) =>
-            (user.email === credentials?.email || user.username === credentials?.email) &&
+            user.email === credentials?.email &&
             user.password === credentials?.password
         );
-      
+
         if (user) {
-          return { id: user.id, email: user.email, name: user.username };
+          return { id: user.id, name: user.name, email: user.email };
         } else {
           return null;
         }
@@ -44,8 +34,10 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
+    signIn: "/login", 
+  },
+  session: {
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -56,7 +48,7 @@ export default NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id as string; 
       }
       return session;
     },

@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react'; 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import Image from "next/image";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -22,12 +22,12 @@ export default function SignIn() {
     });
 
     if (response?.ok) {
-      console.log("Login successful");
-      router.push("/home"); // Redirect to the desired page after login
+      router.push("/");
     } else {
       console.error("Login failed");
     }
   };
+
 
 
   return (

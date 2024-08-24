@@ -1,15 +1,15 @@
 "use client";
 
-import { useRouter } from 'next/navigation'; // Mengimpor useRouter dari next/navigation
-import { useState } from 'react';
-import Image from 'next/image';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Image from "next/image";
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    whatsapp: '',
-    password: ''
+    email: "",
+    username: "",
+    whatsapp: "",
+    password: "",
   });
 
   const router = useRouter();
@@ -17,13 +17,13 @@ export default function Register() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Registration successful", formData);
-    router.push("/login"); // Redirect to the login page after registration
-  };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Tambahkan data registrasi ke users dummy (biasanya ini dilakukan dengan API)
+    console.log("Registration successful", formData);
+    router.push("/login"); // Redirect ke halaman login setelah registrasi
+  };
   return (
     <>
       <header className="w-full py-4 bg-gray-100 flex justify-between items-center px-8 md:px-12">
